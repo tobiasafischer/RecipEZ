@@ -20,7 +20,7 @@ const App = () => {
     <div className="App">
       <div>
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">RecipEZ</Navbar.Brand>
+          <Navbar.Brand href="/">RecipEZ</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav

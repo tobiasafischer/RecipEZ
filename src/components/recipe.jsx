@@ -77,7 +77,19 @@ const Recipe = (props) => {
   };
 
   return (
-    <div style={{ justifyContent: 'center' }}>
+    <div style={{
+      borderRadius: '10px',
+      boxShadow: '0px 5px 20px rgb(71, 71, 71)',
+      margin: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      background: 'white',
+      alignItems: 'center',
+      minWidth: '40%',
+      width: '45%',
+    }}
+    >
       <Card
         style={{ color: '#525252' }}
         border="0"

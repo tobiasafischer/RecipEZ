@@ -23,16 +23,18 @@ const RecipePage = () => {
   }, []);
 
   return (
-    <div className="App">
+    <div className="Tiles">
       <div
         id="tile-list"
         style={{
-          marginLeft: '25%',
-          width: '50%',
+          display: 'flex',
+          justifyContent: 'space-around',
+          flexWrap: 'wrap',
         }}
       >
         {recipes.map((recipe) => (
           <Recipe
+            key={JSON.stringify(recipe)}
             username={username}
             recipe={recipe.recipe}
             title={recipe.recipe.label}
