@@ -14,7 +14,6 @@ import axios from 'axios';
 import './styles/recipe.css';
 
 const Recipe = (props) => {
-  const [{ recipe }] = useState(props);
   const [{ title }] = useState(props);
   const [{ calories }] = useState(props);
   const [{ healthValues }] = useState(props);
@@ -24,6 +23,7 @@ const Recipe = (props) => {
   const [{ sourceURL }] = useState(props);
   const [{ quantity }] = useState(props);
   const url = 'http://localhost:3001';
+  healthValues.SUGARADDED = healthValues['SUGAR.added'];
   const nutritionFacts = [
     'CA',
     'CHOCDF',
@@ -33,7 +33,7 @@ const Recipe = (props) => {
     'NA',
     'PROCNT',
     'SUGAR',
-    'SUGAR.added',
+    'SUGARADDED',
   ];
 
   const populateNutrition = () => {
@@ -51,8 +51,18 @@ const Recipe = (props) => {
   };
 
   const saveRecipe = () => {
+    const json = {
+      title,
+      calories,
+      healthValues,
+      image,
+      ingredients,
+      source,
+      sourceURL,
+      quantity,
+    };
     console.log(`${url}/save-recipe`);
-    axios.post(`${url}/save-recipe`, recipe)
+    axios.post(`${url}/save-recipe`, json)
       .then((res) => {
         console.log(res);
       })
