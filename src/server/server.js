@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/save-recipe', (req, res) => {
-  saveRecipe(req.body)
+  saveRecipe(req.body.json, req.body.username)
     .then(() => {
       res.sendStatus(201);
     })

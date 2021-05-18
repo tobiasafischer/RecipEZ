@@ -15,6 +15,7 @@ const { API_ID, API_KEY } = config;
 const App = () => {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState('tiramisu');
+  const [username] = useState('tobiasaf');
 
   const getRecipes = async () => {
     const resp = await fetch(
@@ -81,6 +82,7 @@ const App = () => {
       >
         {recipes.map((recipe) => (
           <Recipe
+            username={username}
             recipe={recipe.recipe}
             title={recipe.recipe.label}
             calories={recipe.recipe.calories}

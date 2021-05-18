@@ -22,6 +22,7 @@ const Recipe = (props) => {
   const [{ source }] = useState(props);
   const [{ sourceURL }] = useState(props);
   const [{ quantity }] = useState(props);
+  const [{ username }] = useState(props);
   const url = 'http://localhost:3001';
   healthValues.SUGARADDED = healthValues['SUGAR.added'];
   const nutritionFacts = [
@@ -61,8 +62,12 @@ const Recipe = (props) => {
       sourceURL,
       quantity,
     };
-    console.log(`${url}/save-recipe`);
-    axios.post(`${url}/save-recipe`, json)
+    const obj = {
+      json,
+      username,
+    };
+
+    axios.post(`${url}/save-recipe`, obj)
       .then((res) => {
         console.log(res);
       })
