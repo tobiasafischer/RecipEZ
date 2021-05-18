@@ -1,0 +1,17 @@
+#ingredient-list::-webkit-scrollbar {
+  display: none;
+}
+
+#ingredient-list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#nutrition::-webkit-scrollbar {
+  display: none;
+}
+
+#nutrition {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
