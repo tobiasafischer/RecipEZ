@@ -32,4 +32,15 @@ const addRecipe = (sourceURL, username) => Recipes.find({ sourceURL })
     if (err) throw err;
   });
 
-module.exports = { saveUser, addRecipe };
+const getRecipes = (username) => Users.find({ username })
+  .then((user) => Recipes.find({
+    _id: {
+      $in: user[0].recipes,
+    },
+  })
+    .then((data) => data))
+  .catch((err) => {
+    if (err) throw err;
+  });
+
+module.exports = { saveUser, addRecipe, getRecipes };

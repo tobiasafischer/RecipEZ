@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './App';
+import RecipePage from './components/recipe-page';
+import MyRecipes from './components/my-recipes';
+import Cart from './components/cart';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+      <Switch>
+        <Route exact path="/" component={RecipePage} />
+        <Route exact path="/recipes" component={MyRecipes} />
+        <Route exact path="/cart" component={Cart} />
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root'),
 );

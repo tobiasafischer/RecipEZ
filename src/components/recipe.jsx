@@ -67,7 +67,7 @@ const Recipe = (props) => {
       username,
     };
 
-    axios.post(`${url}/save-recipe`, obj)
+    axios.post(`${url}/recipe`, obj)
       .then((res) => {
         console.log(res);
       })
