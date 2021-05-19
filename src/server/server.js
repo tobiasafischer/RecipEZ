@@ -39,6 +39,7 @@ app.post('/recipe', (req, res) => {
 app.get('/recipe', (req, res) => {
   getRecipes(req.query.username)
     .then((data) => {
+      console.log(data);
       res.json(data);
     })
     .catch((err) => {
@@ -61,6 +62,7 @@ app.post('/cart', (req, res) => {
 app.get('/cart', (req, res) => {
   getCart(req.query.username)
     .then((data) => {
+      console.log(data);
       res.json(data);
     })
     .catch(() => {

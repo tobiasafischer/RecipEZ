@@ -10,8 +10,7 @@ const saveRecipe = (data, username) => {
   return recipe.save()
     .then(() => {
       addRecipe(data.sourceURL, username)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
         })
         .catch((err) => {
           if (err) throw err;

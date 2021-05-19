@@ -46,6 +46,7 @@ const RecipePage = () => {
             source={recipe.recipe.source}
             sourceURL={recipe.recipe.url}
             quantity={recipe.recipe.yield}
+            showButtons="true"
           />
         ))}
       </div>

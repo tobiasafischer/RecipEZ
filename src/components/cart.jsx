@@ -2,25 +2,34 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ShoppingList from './list/shopping-list';
 
 const url = 'http://localhost:3001';
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
-
+  const [recipes, setRecipes] = useState([]);
+  const [list, setList] = useState([]);
+  const username = 'tobiasaf';
   useEffect(() => {
-    axios.get(`${url}/cart`)
+    axios.get(`${url}/cart`, { params: { username } })
       .then((data) => {
-        setCart(data);
+        setRecipes(data.data);
       })
       .catch((err) => {
         if (err) throw err;
       });
   }, []);
 
+  useEffect(() => {
+    setList(recipes.map((recipe) => ({
+      category: recipe.title,
+      items: recipe.ingredients,
+    })));
+  }, [recipes]);
+
   return (
-    <div>
-      <h1>Cart</h1>
+    <div className="Tiles">
+      <ShoppingList key={list} parentListItems={list} />
     </div>
   );
 };

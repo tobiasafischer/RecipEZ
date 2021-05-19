@@ -23,8 +23,10 @@ const Recipe = (props) => {
   const [{ sourceURL }] = useState(props);
   const [{ quantity }] = useState(props);
   const [{ username }] = useState(props);
+  const [{ showButtons }] = useState(props);
   const url = 'http://localhost:3001';
-  healthValues.SUGARADDED = healthValues['SUGAR.added'];
+  if (healthValues['SUGAR.added']) healthValues.SUGARADDED = healthValues['SUGAR.added'];
+
   const nutritionFacts = [
     'CA',
     'CHOCDF',
@@ -99,6 +101,32 @@ const Recipe = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const populateButtons = () => {
+    if (showButtons) {
+      return (
+        <div style={{ display: 'flex' }}>
+          <div>
+            <a
+              id="review-button"
+              onClick={() => saveCart()}
+            >
+              Add to Cart
+            </a>
+          </div>
+          <div>
+            <a
+              id="review-button"
+              onClick={() => saveRecipe()}
+            >
+              Save Recipe
+            </a>
+          </div>
+        </div>
+      );
+    }
+    return (<div />);
   };
 
   return (
@@ -196,24 +224,7 @@ const Recipe = (props) => {
               </div>
             </div>
           </div>
-          <div style={{ display: 'flex' }}>
-            <div>
-              <a
-                id="review-button"
-                onClick={() => saveCart()}
-              >
-                Add to Cart
-              </a>
-            </div>
-            <div>
-              <a
-                id="review-button"
-                onClick={() => saveRecipe()}
-              >
-                Save Recipe
-              </a>
-            </div>
-          </div>
+          {populateButtons()}
         </Card.Body>
       </Card>
       <hr style={{ border: '1px solid black' }} />
