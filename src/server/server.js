@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const saveRecipe = require('../mongo/logic/recipe');
 const { getRecipes } = require('../mongo/logic/user');
+const { getCart, saveCart } = require('../mongo/logic/cart');
 
 const app = express();
 const port = 3001;
@@ -38,7 +39,6 @@ app.post('/recipe', (req, res) => {
 app.get('/recipe', (req, res) => {
   getRecipes(req.query.username)
     .then((data) => {
-      console.log(data);
       res.json(data);
     })
     .catch((err) => {
@@ -46,6 +46,28 @@ app.get('/recipe', (req, res) => {
       else res.sendStatus(500);
     });
 });
+
+app.post('/cart', (req, res) => {
+  saveCart(req.body.json, req.body.username)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      if (err) throw err;
+      else res.sendStatus(500);
+    });
+});
+
+app.get('/cart', (req, res) => {
+  getCart(req.query.username)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch(() => {
+      res.sendStatus(501);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

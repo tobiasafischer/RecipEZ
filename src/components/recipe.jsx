@@ -76,6 +76,31 @@ const Recipe = (props) => {
       });
   };
 
+  const saveCart = () => {
+    const json = {
+      title,
+      calories,
+      healthValues,
+      image,
+      ingredients,
+      source,
+      sourceURL,
+      quantity,
+    };
+    const obj = {
+      json,
+      username,
+    };
+
+    axios.post(`${url}/cart`, obj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div style={{
       borderRadius: '10px',
@@ -173,7 +198,12 @@ const Recipe = (props) => {
           </div>
           <div style={{ display: 'flex' }}>
             <div>
-              <a id="review-button">Add to Cart</a>
+              <a
+                id="review-button"
+                onClick={() => saveCart()}
+              >
+                Add to Cart
+              </a>
             </div>
             <div>
               <a

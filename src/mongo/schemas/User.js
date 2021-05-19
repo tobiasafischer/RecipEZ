@@ -7,6 +7,9 @@ const userSchema = new Schema({
   recipes: [
     Schema.Types.ObjectId,
   ],
+  cart: [
+    Schema.Types.ObjectId,
+  ],
 });
 
 module.exports = userSchema;
