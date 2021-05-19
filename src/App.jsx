@@ -10,11 +10,16 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from './assets/recipez.png';
 
-const App = () => {
-  const [search, setSearch] = useState('tiramisu');
-
+const App = (props) => {
+  const [{ setSearch }] = useState(props);
+  const [currentSearch, setCurrentSearch] = useState('');
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    setCurrentSearch(e.target.value);
+  };
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearch(currentSearch);
+    setCurrentSearch('');
   };
 
   return (
@@ -45,16 +50,16 @@ const App = () => {
                 <Nav.Link>My Recipes</Nav.Link>
               </LinkContainer>
             </Nav>
-            <Form className="d-flex">
+            <Form className="d-flex" onSubmit={handleSearchSubmit}>
               <FormControl
                 type="search"
                 placeholder="Search"
-                value={search}
+                value={currentSearch}
                 onChange={(e) => handleSearch(e)}
                 className="mr-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
             <LinkContainer to="/cart">
               <Navbar.Brand>

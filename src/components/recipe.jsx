@@ -126,7 +126,7 @@ const Recipe = (props) => {
         </div>
       );
     }
-    return (<div />);
+    return (<></>);
   };
 
   return (
@@ -137,14 +137,14 @@ const Recipe = (props) => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-around',
-      background: 'white',
+      backgroundImage: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)',
       alignItems: 'center',
       minWidth: '40%',
-      width: '45%',
+      width: '75%',
     }}
     >
       <Card
-        style={{ color: '#525252' }}
+        style={{ backgroundImage: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)' }}
         border="0"
       >
         <Card.Title>

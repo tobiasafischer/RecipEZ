@@ -4,10 +4,10 @@ import Recipe from './recipe';
 
 const { API_ID, API_KEY } = config;
 
-const RecipePage = () => {
+const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
-  const [search] = useState('tiramisu');
-  const [username] = useState('tobiasaf');
+  const [{ search }] = useState(props);
+  const [{ username }] = useState(props);
 
   const getRecipes = async () => {
     const resp = await fetch(
@@ -46,7 +46,7 @@ const RecipePage = () => {
             source={recipe.recipe.source}
             sourceURL={recipe.recipe.url}
             quantity={recipe.recipe.yield}
-            showButtons="true"
+            showButtons
           />
         ))}
       </div>

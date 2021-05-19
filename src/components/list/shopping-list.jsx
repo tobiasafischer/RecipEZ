@@ -5,9 +5,8 @@ import NestedList from './nested-list';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    width: '90%',
+    backgroundColor: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)',
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -17,14 +16,13 @@ const useStyles = makeStyles((theme) => ({
 const ShoppingList = (props) => {
   const classes = useStyles();
   const [{ parentListItems }] = useState(props);
-  console.log(parentListItems);
   return (
     <List
       component="nav"
       className={classes.root}
     >
       {parentListItems.map((item) => (
-        <NestedList item={item.category} items={item.items} />))}
+        <NestedList image={item.image} item={item.category} items={item.items} />))}
     </List>
   );
 };

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -8,17 +9,32 @@ import MyRecipes from './components/my-recipes';
 import Cart from './components/cart';
 import reportWebVitals from './reportWebVitals';
 
+const Index = () => {
+  const [username, setUsername] = useState('tobiasaf');
+  const [search, setSearch] = useState('');
+
+  return (
+    <React.StrictMode>
+      <Router>
+        <App setSearch={setSearch} />
+        <Switch>
+          <Route exact path="/">
+            <RecipePage key={search} username={username} search={search} />
+          </Route>
+          <Route exact path="/recipes">
+            <MyRecipes username={username} />
+          </Route>
+          <Route exact path="/cart">
+            <Cart username={username} />
+          </Route>
+        </Switch>
+      </Router>
+    </React.StrictMode>
+  );
+};
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App />
-      <Switch>
-        <Route exact path="/" component={RecipePage} />
-        <Route exact path="/recipes" component={MyRecipes} />
-        <Route exact path="/cart" component={Cart} />
-      </Switch>
-    </Router>
-  </React.StrictMode>,
+  <Index />,
   document.getElementById('root'),
 );
 

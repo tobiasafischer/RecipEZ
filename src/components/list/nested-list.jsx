@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import Avatar from '@material-ui/core/Avatar';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -13,8 +13,7 @@ import CheckboxList from './checkbox-list';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    fontSize: '20px',
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -24,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
 const NestedList = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [{ image }] = useState(props);
   const [{ item }] = useState(props);
   const [{ items }] = useState(props);
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -34,9 +33,12 @@ const NestedList = (props) => {
   return (
     <div>
       <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
+        <ListItemAvatar>
+          <Avatar
+            alt={`Avatar n°${item + 1}`}
+            src={image}
+          />
+        </ListItemAvatar>
         <ListItemText primary={item} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
