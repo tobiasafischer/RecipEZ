@@ -8,6 +8,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import logo from './assets/recipez.png';
 
 const App = () => {
   const [search, setSearch] = useState('tiramisu');
@@ -20,7 +21,16 @@ const App = () => {
     <div className="App">
       <div>
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="/">RecipEZ</Navbar.Brand>
+          <Navbar.Brand href="/">
+            <img
+              src={logo}
+              width="129.6"
+              height="37.2"
+              className="d-inline-block align-top"
+              alt="Recipez logo"
+              style={{ marginLeft: '20px' }}
+            />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
