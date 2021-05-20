@@ -8,11 +8,11 @@ import {
 import logo from '../assets/recipez.png';
 import Recipe from './recipe';
 
-// import config from '../config';
+import config from '../config';
 
-// const { API_ID, API_KEY } = config;
-let API_KEY;
-let API_ID;
+let { API_ID, API_KEY } = config;
+// let API_KEY;
+// let API_ID;
 
 const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
