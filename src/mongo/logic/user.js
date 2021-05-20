@@ -44,12 +44,20 @@ const getRecipes = (username) => Users.find({ username })
     if (err) throw err;
   });
 
+const deleteRecipe = (_id) => {
+  Recipes.deleteOne({ _id })
+    .catch((err) => {
+      if (err) throw err;
+    });
+};
+
 const deleteCard = (username, sourceURL) => Recipes.find({ sourceURL })
   .then((recipe) => {
     Users.updateOne({ username }, {
       $pull: { recipes: recipe[0]._id },
     })
       .then(() => {
+        deleteRecipe(recipe[0]._id);
       })
       .catch((err) => {
         if (err) throw err;
