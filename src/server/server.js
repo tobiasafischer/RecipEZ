@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const saveRecipe = require('../mongo/logic/recipe');
 const { getRecipes } = require('../mongo/logic/user');
 const { getCart, saveCart } = require('../mongo/logic/cart');
-require('dotenv').load();
 
 const app = express();
 const port = 3001;
