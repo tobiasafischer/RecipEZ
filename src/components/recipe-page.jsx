@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import config from '../config';
+// import config from '../config';
 import Recipe from './recipe';
 
-const { API_ID, API_KEY } = config;
+// const { API_ID, API_KEY } = config;
+const { API_ID } = process.env.API_ID;
+const { API_KEY } = process.env.API_KEY;
 
 const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
