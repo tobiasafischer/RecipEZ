@@ -15,7 +15,11 @@ app.use(cors());
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('build'));
-const url = `mongodb+srv://tobiasaf:${process.env.PASSWORD}@cluster0.fshtv.mongodb.net/recipes?retryWrites=true&w=majority`;
+let url = 'mongodb://localhost:27017/recipes';
+if (process.env.NODE_ENV === 'production') {
+  url = process.env.MONGODB_URI;
+}
+console.log(url);
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
