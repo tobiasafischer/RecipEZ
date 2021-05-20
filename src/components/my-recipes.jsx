@@ -7,43 +7,53 @@ import Recipe from './recipe';
 
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const [tiles, setTiles] = useState([]);
   const username = 'tobiasaf';
 
   useEffect(() => {
     axios.get('/recipe', { params: { username: 'tobiasaf' } })
       .then((data) => {
+        console.log(data);
         setRecipes(data.data);
       });
   }, []);
 
+  const populate = () => (
+    <div
+      id="tile-list"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
+      }}
+    >
+      {recipes.map((recipe) => (
+        <Recipe
+          key={JSON.stringify(recipe)}
+          username={username}
+          recipe={recipe}
+          title={recipe.title}
+          calories={recipe.calories}
+          healthValues={recipe.healthValues}
+          image={recipe.image}
+          ingredients={recipe.ingredients}
+          source={recipe.source}
+          sourceURL={recipe.sourceURL}
+          quantity={recipe.quantity}
+          showCart
+          showDelete
+        />
+      ))}
+    </div>
+  );
+
+  useEffect(() => {
+    setTiles(populate());
+  }, [recipes]);
+
   return (
     <div className="Tiles">
-      <div
-        id="tile-list"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-        }}
-      >
-        {recipes.map((recipe) => (
-          <Recipe
-            key={JSON.stringify(recipe)}
-            username={username}
-            recipe={recipe}
-            title={recipe.title}
-            calories={recipe.calories}
-            healthValues={recipe.healthValues}
-            image={recipe.image}
-            ingredients={recipe.ingredients}
-            source={recipe.source}
-            sourceURL={recipe.sourceURL}
-            quantity={recipe.quantity}
-            showCart
-            showDelete
-          />
-        ))}
-      </div>
+      {tiles}
     </div>
   );
 };
