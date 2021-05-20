@@ -14,9 +14,8 @@ app.use(cors());
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('build'));
-const url = 'tobias-fischer-recipez.herokuapp.com';
-const mongoDB = `mongodb://${url}:27017/recipes`;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+const url = `mongodb+srv://tobiasaf:${process.env.PASSWORD}@cluster0.fshtv.mongodb.net/recipes?retryWrites=true&w=majority`;
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongo connection error: '));
