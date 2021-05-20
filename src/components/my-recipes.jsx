@@ -13,7 +13,6 @@ const MyRecipes = () => {
   useEffect(() => {
     axios.get(`${url}/recipe`, { params: { username: 'tobiasaf' } })
       .then((data) => {
-        console.log(data.data);
         setRecipes(data.data);
       });
   }, []);
@@ -42,6 +41,7 @@ const MyRecipes = () => {
             sourceURL={recipe.sourceURL}
             quantity={recipe.quantity}
             showCart
+            showDelete
           />
         ))}
       </div>

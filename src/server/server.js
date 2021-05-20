@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const saveRecipe = require('../mongo/logic/recipe');
-const { getRecipes } = require('../mongo/logic/user');
+const { getRecipes, deleteCard } = require('../mongo/logic/user');
 const { getCart, saveCart, deleteItem } = require('../mongo/logic/cart');
 
 const app = express();
@@ -73,6 +73,16 @@ app.get('/cart', (req, res) => {
 app.post('/delete-item', (req, res) => {
   console.log(req.body);
   deleteItem(req.body.username, req.body.recipe.sourceURL)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(() => {
+      res.sendStatus(501);
+    });
+});
+
+app.post('/delete-card', (req, res) => {
+  deleteCard(req.body.username, req.body.sourceURL)
     .then(() => {
       res.sendStatus(201);
     })

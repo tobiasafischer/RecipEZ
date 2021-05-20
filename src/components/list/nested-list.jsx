@@ -60,25 +60,34 @@ const NestedList = (props) => {
   const renderItem = () => {
     if (visible) {
       return (
-        <div>
-          <ListItem button onClick={handleClick}>
-            <ListItemAvatar>
-              <Avatar
-                alt={`Avatar n°${item + 1}`}
-                src={image}
-              />
-            </ListItemAvatar>
-            <ListItemText primary={item} />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List className={classes.root}>
-              {items.map((val) => (<CheckboxList item={val} />))}
-            </List>
-          </Collapse>
-          <ListItemIcon onClick={() => deleteItem()}>
-            <DeleteIcon />
-          </ListItemIcon>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'row',
+        }}
+        >
+          <div style={{ width: '80vh', alignItems: 'center' }}>
+            <ListItem button onClick={handleClick}>
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar n°${item + 1}`}
+                  src={image}
+                />
+              </ListItemAvatar>
+              <ListItemText primary={item} />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List className={classes.root}>
+                {items.map((val) => (<CheckboxList item={val} />))}
+              </List>
+            </Collapse>
+          </div>
+          <div style={{ marginTop: '1.5vh' }}>
+            <ListItemIcon onClick={() => deleteItem()}>
+              <DeleteIcon />
+            </ListItemIcon>
+          </div>
         </div>
       );
     }

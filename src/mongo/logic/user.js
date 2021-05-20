@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 const mongoose = require('mongoose');
 const userSchema = require('../schemas/User');
@@ -43,4 +44,21 @@ const getRecipes = (username) => Users.find({ username })
     if (err) throw err;
   });
 
-module.exports = { saveUser, addRecipe, getRecipes };
+const deleteCard = (username, sourceURL) => Recipes.find({ sourceURL })
+  .then((recipe) => {
+    Users.updateOne({ username }, {
+      $pull: { recipes: recipe[0]._id },
+    })
+      .then(() => {
+      })
+      .catch((err) => {
+        if (err) throw err;
+      });
+  })
+  .catch((err) => {
+    if (err) throw err;
+  });
+
+module.exports = {
+  saveUser, addRecipe, getRecipes, deleteCard,
+};

@@ -10,6 +10,8 @@ import {
   // Collapse,
 } from 'react-bootstrap';
 import axios from 'axios';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './styles/recipe.css';
 
@@ -25,39 +27,15 @@ const Recipe = (props) => {
   const [{ username }] = useState(props);
   const [{ showCart }] = useState(props);
   const [{ showRecipe }] = useState(props);
+  const [{ showDelete }] = useState(props);
+
+  const [show, setShow] = useState(true);
 
   let url = 'http://localhost:3001';
 
   if (process.env.NODE_ENV === 'production') {
     url = 'https://tobias-fischer-recipez.herokuapp.com';
   }
-  if (healthValues['SUGAR.added']) healthValues.SUGARADDED = healthValues['SUGAR.added'];
-
-  const nutritionFacts = [
-    'CA',
-    'CHOCDF',
-    'CHOLE',
-    'FASAT',
-    'FAT',
-    'NA',
-    'PROCNT',
-    'SUGAR',
-    'SUGARADDED',
-  ];
-
-  const populateNutrition = () => {
-    const arr = [];
-    for (const [k, v] of Object.entries(healthValues)) {
-      if (nutritionFacts.includes(k)) {
-        arr.push(
-          <li key={k}>
-            {`${v.label}: ${Math.round(v.quantity)} ${v.unit}`}
-          </li>,
-        );
-      }
-    }
-    return arr;
-  };
 
   const saveRecipe = () => {
     const json = {
@@ -114,7 +92,8 @@ const Recipe = (props) => {
       return (
         <div>
           <a
-            id="review-button"
+            id="fancy-button"
+            style={{ width: '30vh' }}
             onClick={() => saveCart()}
           >
             Add to Cart
@@ -130,7 +109,8 @@ const Recipe = (props) => {
       return (
         <div>
           <a
-            id="review-button"
+            id="fancy-button"
+            style={{ width: '30vh' }}
             onClick={() => saveRecipe()}
           >
             Save Recipe
@@ -142,10 +122,14 @@ const Recipe = (props) => {
   };
 
   const populateButtons = () => {
-    console.log(showCart, showRecipe);
     if (showCart || showRecipe) {
       return (
-        <div style={{ display: 'flex' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'row',
+        }}
+        >
           {populateCartButton()}
           {populateRecipeButton()}
         </div>
@@ -154,106 +138,139 @@ const Recipe = (props) => {
     return (<></>);
   };
 
-  return (
-    <div style={{
-      borderRadius: '10px',
-      boxShadow: '0px 5px 20px rgb(71, 71, 71)',
-      margin: '20px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-around',
-      backgroundImage: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)',
-      alignItems: 'center',
-      minWidth: '40%',
-      width: '75%',
-    }}
-    >
-      <Card
-        style={{ backgroundImage: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)' }}
-        border="0"
-      >
-        <Card.Title>
-          <div
-            style={{ fontSize: '50px' }}
+  const deleteItem = () => {
+    const obj = {
+      sourceURL,
+      username,
+    };
+    axios.post(`${url}/delete-card`, obj)
+      .then(() => {
+        setShow(false);
+      })
+      .catch((err) => {
+        if (err) throw err;
+      });
+  };
+
+  const populateShowDelete = () => {
+    if (showDelete) {
+      return (
+        <ListItemIcon
+          onClick={() => deleteItem()}
+          style={{ marginLeft: '85vh', marginTop: '2vh' }}
+        >
+          <DeleteIcon />
+        </ListItemIcon>
+      );
+    }
+    return (<></>);
+  };
+
+  const populate = () => {
+    if (show) {
+      return (
+        <div style={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+        >
+          <Card
+            style={{
+              background: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%) fixed',
+              borderRadius: '10px',
+              boxShadow: '0px 5px 20px rgb(71, 71, 71)',
+              margin: '20px',
+              width: '90vh',
+            }}
+            border="0"
           >
-            { title }
-          </div>
-        </Card.Title>
-        <Card.Body>
-          <div className="d-inline-flex">
-            <div className="ml-3">
-              <Image
-                style={{
-                  maxWidth: '200px',
-                  borderRadius: '50%',
-                }}
-                src={image}
-                onError={(e) => {
-                  e.currentTarget.style = {};
-                  e.currentTarget.src = 'https://bitsofco.de/content/images/2018/12/broken-1.png';
-                }}
-                alt="food_img"
-                rounded
-                thumbnail="true"
-              />
-              <div style={{ display: 'flex', alignItems: 'center', marginLeft: '25%' }}>
-                <div>
-                  <a href={sourceURL}>
-                    {source}
-                  </a>
+            {populateShowDelete()}
+            <Card.Title>
+              <div style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+              }}
+              >
+                <div
+                  style={{
+                    fontSize: '40px',
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                  }}
+                >
+                  { title }
                 </div>
-                <div style={{ display: 'inline-block', fontSize: '16px' }}>
-                  <div style={{ marginLeft: '10px' }}>
-                    { `Yields: ${quantity} servings` }
-                  </div>
+                <div style={{ fontSize: '16px', marginTop: '.5vh' }}>
                   <div>
+                    { `Yields: ${quantity} servings\t` }
                     { Math.round(calories) }
                     { ' ' }
                     calories
                   </div>
                 </div>
               </div>
-            </div>
-            <div style={{ align: 'center' }}>
+            </Card.Title>
+            <Card.Body>
               <div
-                className="ml-2"
-                id="ingredient-list"
                 style={{
-                  display: 'inline-block',
-                  border: '1px solid',
-                  width: '300px',
-                  height: '250px',
-                  overflowY: 'scroll',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
                 }}
               >
-                <ul style={{ textAlign: 'left' }}>
-                  {ingredients.map((ingredient) => (
-                    <li key={ingredient}>{ingredient}</li>
-                  ))}
-                </ul>
-              </div>
-              <div
-                className="ml-2"
-                id="nutrition"
-                style={{
-                  display: 'inline-block',
-                  border: '1px solid',
-                  width: '300px',
-                  height: '250px',
-                  overflowY: 'scroll',
+                <div style={{
+                  alignItems: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
                 }}
-              >
-                <ul style={{ textAlign: 'left' }}>
-                  {populateNutrition()}
-                </ul>
+                >
+                  <Image
+                    style={{
+                      width: '30vh',
+                      borderRadius: '50%',
+                    }}
+                    src={image}
+                    onError={(e) => {
+                      e.currentTarget.style = {};
+                      e.currentTarget.src = 'https://bitsofco.de/content/images/2018/12/broken-1.png';
+                    }}
+                    alt="food_img"
+                    rounded
+                    thumbnail="true"
+                  />
+                  <div>
+                    <a
+                      id="fancy-button"
+                      href={sourceURL}
+                      style={{ width: '30vh', marginTop: '2vh' }}
+                    >
+                      {source}
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          {populateButtons()}
-        </Card.Body>
-      </Card>
-      <hr style={{ border: '1px solid black' }} />
-    </div>
+              {populateButtons()}
+            </Card.Body>
+          </Card>
+          <hr style={{ border: '1px solid black' }} />
+        </div>
+      );
+    }
+    return (<></>);
+  };
+
+  return (
+    <>
+      {populate()}
+    </>
   );
 };
 
