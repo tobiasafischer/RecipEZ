@@ -13,7 +13,7 @@ const port = 3001;
 app.use(cors());
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static('build'));
 
 const mongoDB = 'mongodb://localhost:27017/recipes';
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -22,7 +22,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongo connection error: '));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
 });
 
 app.post('/recipe', (req, res) => {
