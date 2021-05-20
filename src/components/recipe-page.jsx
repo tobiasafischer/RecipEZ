@@ -1,17 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Image } from 'react-bootstrap';
+import {
+  Image,
+  Form,
+  FormControl,
+  Button,
+} from 'react-bootstrap';
+import logo from '../assets/recipez.png';
 import Recipe from './recipe';
 
 // import config from '../config';
+
 // const { API_ID, API_KEY } = config;
-const { API_ID } = process.env.API_ID;
-const { API_KEY } = process.env.API_KEY;
+let API_KEY;
+let API_ID;
 
 const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [{ search }] = useState(props);
   const [{ username }] = useState(props);
+  const [{ setSearch }] = useState(props);
+  const [currentSearch, setCurrentSearch] = useState('');
   const [showPage, setShowPage] = useState(true);
+
+  if (process.env.NODE_ENV === 'production') {
+    API_ID = process.env.API_ID;
+    API_KEY = process.env.API_KEY;
+  }
+
+  const handleSearch = (e) => {
+    setCurrentSearch(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearch(currentSearch);
+    setCurrentSearch('');
+  };
 
   const getRecipes = async () => {
     const resp = await fetch(
@@ -21,20 +45,41 @@ const RecipePage = (props) => {
     const data = await resp.json();
     setRecipes(data.hits);
   };
-
   const populatePage = () => {
     if (showPage) {
       return (
-        <div>
-          <Image
-            style={{
-              maxWidth: '400px',
-              borderRadius: '50%',
-            }}
-            src="../assets/recipez.png"
-            alt="logo"
-            rounded
-          />
+        <div style={{
+          alignItems: 'center',
+          marginTop: '20%',
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+        >
+          <div>
+            <Image
+              style={{
+                maxWidth: '400px',
+                borderRadius: '50%',
+              }}
+              src={logo}
+              alt="logo"
+              rounded
+            />
+          </div>
+          <div style={{ marginTop: '2%' }}>
+            <Form className="d-flex" onSubmit={handleSearchSubmit}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                value={currentSearch}
+                onChange={(e) => handleSearch(e)}
+                className="mr-2"
+                aria-label="Search"
+              />
+              <Button type="submit" variant="outline-success">Search</Button>
+            </Form>
+          </div>
         </div>
       );
     }
@@ -51,7 +96,7 @@ const RecipePage = (props) => {
   }, [search]);
 
   return (
-    <div className="Tiles">
+    <div>
       {populatePage()}
       <div
         id="tile-list"

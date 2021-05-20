@@ -25,7 +25,7 @@ const App = (props) => {
   return (
     <div className="App">
       <div>
-        <Navbar bg="light" expand="lg">
+        <Navbar className="nav-color" expand="lg">
           <Navbar.Brand href="/">
             <img
               src={logo}

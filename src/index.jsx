@@ -19,7 +19,7 @@ const Index = () => {
         <App setSearch={setSearch} />
         <Switch>
           <Route exact path="/">
-            <RecipePage key={search} username={username} search={search} />
+            <RecipePage key={search} setSearch={setSearch} username={username} search={search} />
           </Route>
           <Route exact path="/recipes">
             <MyRecipes username={username} />

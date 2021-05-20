@@ -12,3 +12,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.nav-color {
+  background-color: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
