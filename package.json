@@ -154,7 +154,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^8.2.15",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^4.0.3",
     "webpack": "^4.44.2"
   }
 }
