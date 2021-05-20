@@ -24,7 +24,7 @@ const Recipe = (props) => {
   const [{ quantity }] = useState(props);
   const [{ username }] = useState(props);
   const [{ showButtons }] = useState(props);
-  let url = 'https://localhoast:3000/';
+  let url = 'https://localhoast:3000';
 
   if (process.env.NODE_ENV === 'production') {
     url = 'https://tobias-fischer-recipez.herokuapp.com';

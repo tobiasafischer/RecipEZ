@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import config from '../config';
+import { Image } from 'react-bootstrap';
 import Recipe from './recipe';
 
+// import config from '../config';
 // const { API_ID, API_KEY } = config;
 const { API_ID } = process.env.API_ID;
 const { API_KEY } = process.env.API_KEY;
@@ -10,6 +11,7 @@ const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [{ search }] = useState(props);
   const [{ username }] = useState(props);
+  const [showPage, setShowPage] = useState(true);
 
   const getRecipes = async () => {
     const resp = await fetch(
@@ -20,12 +22,37 @@ const RecipePage = (props) => {
     setRecipes(data.hits);
   };
 
+  const populatePage = () => {
+    if (showPage) {
+      return (
+        <div>
+          <Image
+            style={{
+              maxWidth: '400px',
+              borderRadius: '50%',
+            }}
+            src="../assets/recipez.png"
+            alt="logo"
+            rounded
+          />
+        </div>
+      );
+    }
+    return (<></>);
+  };
+
   useEffect(() => {
     getRecipes();
-  }, []);
+    if (search.length === 0) {
+      setShowPage(true);
+    } else {
+      setShowPage(false);
+    }
+  }, [search]);
 
   return (
     <div className="Tiles">
+      {populatePage()}
       <div
         id="tile-list"
         style={{
