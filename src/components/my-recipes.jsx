@@ -12,7 +12,6 @@ const MyRecipes = () => {
   useEffect(() => {
     axios.get('/recipe', { params: { username: 'tobiasaf' } })
       .then((data) => {
-        console.log(data);
         setRecipes(data.data);
       });
   }, []);

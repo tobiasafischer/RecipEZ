@@ -48,11 +48,9 @@ const Recipe = (props) => {
     };
 
     axios.post('/recipe', obj)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
       });
   };
 
@@ -73,11 +71,9 @@ const Recipe = (props) => {
     };
 
     axios.post('/cart', obj)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
       });
   };
 
