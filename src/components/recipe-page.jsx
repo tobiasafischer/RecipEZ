@@ -50,7 +50,7 @@ const RecipePage = (props) => {
       return (
         <div style={{
           alignItems: 'center',
-          marginTop: '20%',
+          marginTop: '20vh',
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
@@ -120,7 +120,8 @@ const RecipePage = (props) => {
             source={recipe.recipe.source}
             sourceURL={recipe.recipe.url}
             quantity={recipe.recipe.yield}
-            showButtons
+            showCart
+            showRecipe
           />
         ))}
       </div>

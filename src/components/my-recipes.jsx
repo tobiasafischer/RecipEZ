@@ -41,7 +41,7 @@ const MyRecipes = () => {
             source={recipe.source}
             sourceURL={recipe.sourceURL}
             quantity={recipe.quantity}
-            showButtons={false}
+            showCart
           />
         ))}
       </div>

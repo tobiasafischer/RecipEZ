@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const saveRecipe = require('../mongo/logic/recipe');
 const { getRecipes } = require('../mongo/logic/user');
-const { getCart, saveCart } = require('../mongo/logic/cart');
+const { getCart, saveCart, deleteItem } = require('../mongo/logic/cart');
 
 const app = express();
 const port = 3001;
@@ -18,7 +18,6 @@ let url = 'mongodb://localhost:27017/recipes';
 if (process.env.NODE_ENV === 'production') {
   url = process.env.MONGODB_URI;
 }
-console.log(url);
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
@@ -42,7 +41,6 @@ app.post('/recipe', (req, res) => {
 app.get('/recipe', (req, res) => {
   getRecipes(req.query.username)
     .then((data) => {
-      console.log(data);
       res.json(data);
     })
     .catch((err) => {
@@ -65,8 +63,18 @@ app.post('/cart', (req, res) => {
 app.get('/cart', (req, res) => {
   getCart(req.query.username)
     .then((data) => {
-      console.log(data);
       res.json(data);
+    })
+    .catch(() => {
+      res.sendStatus(501);
+    });
+});
+
+app.post('/delete-item', (req, res) => {
+  console.log(req.body);
+  deleteItem(req.body.username, req.body.recipe.sourceURL)
+    .then(() => {
+      res.sendStatus(201);
     })
     .catch(() => {
       res.sendStatus(501);

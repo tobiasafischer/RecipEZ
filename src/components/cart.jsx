@@ -6,10 +6,10 @@ import ShoppingList from './list/shopping-list';
 
 const url = 'http://localhost:3001';
 
-const Cart = () => {
+const Cart = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [list, setList] = useState([]);
-  const username = 'tobiasaf';
+  const [{ username }] = useState(props);
   useEffect(() => {
     axios.get(`${url}/cart`, { params: { username } })
       .then((data) => {
@@ -25,6 +25,7 @@ const Cart = () => {
       category: recipe.title,
       items: recipe.ingredients,
       image: recipe.image,
+      recipe,
     })));
   }, [recipes]);
   return (
@@ -39,7 +40,7 @@ const Cart = () => {
       alignItems: 'center',
     }}
     >
-      <ShoppingList key={list} parentListItems={list} />
+      <ShoppingList key={list} username={username} parentListItems={list} />
     </div>
   );
 };

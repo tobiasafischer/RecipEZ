@@ -16,14 +16,34 @@ const useStyles = makeStyles((theme) => ({
 const ShoppingList = (props) => {
   const classes = useStyles();
   const [{ parentListItems }] = useState(props);
+  const [{ username }] = useState(props);
+
+  const populate = () => {
+    if (parentListItems.length > 0) {
+      return (
+        <List
+          component="nav"
+          className={classes.root}
+        >
+          {parentListItems.map((item) => (
+            <NestedList
+              username={username}
+              image={item.image}
+              recipe={item.recipe}
+              item={item.category}
+              items={item.items}
+            />
+          ))}
+        </List>
+      );
+    }
+    return (<></>);
+  };
+
   return (
-    <List
-      component="nav"
-      className={classes.root}
-    >
-      {parentListItems.map((item) => (
-        <NestedList image={item.image} item={item.category} items={item.items} />))}
-    </List>
+    <div>
+      {populate()}
+    </div>
   );
 };
 

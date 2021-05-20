@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 const mongoose = require('mongoose');
 const recipeSchema = require('../schemas/Recipe');
@@ -65,4 +66,19 @@ const getCart = (username) => Users.find({ username })
     if (err) throw err;
   });
 
-module.exports = { saveCart, getCart };
+const deleteItem = (username, sourceURL) => Recipes.find({ sourceURL })
+  .then((recipe) => {
+    Users.updateOne({ username }, {
+      $pull: { cart: recipe[0]._id },
+    })
+      .then(() => {
+      })
+      .catch((err) => {
+        if (err) throw err;
+      });
+  })
+  .catch((err) => {
+    if (err) throw err;
+  });
+
+module.exports = { saveCart, getCart, deleteItem };

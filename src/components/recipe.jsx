@@ -23,8 +23,10 @@ const Recipe = (props) => {
   const [{ sourceURL }] = useState(props);
   const [{ quantity }] = useState(props);
   const [{ username }] = useState(props);
-  const [{ showButtons }] = useState(props);
-  let url = 'https://localhoast:3000';
+  const [{ showCart }] = useState(props);
+  const [{ showRecipe }] = useState(props);
+
+  let url = 'http://localhost:3001';
 
   if (process.env.NODE_ENV === 'production') {
     url = 'https://tobias-fischer-recipez.herokuapp.com';
@@ -107,26 +109,45 @@ const Recipe = (props) => {
       });
   };
 
+  const populateCartButton = () => {
+    if (showCart) {
+      return (
+        <div>
+          <a
+            id="review-button"
+            onClick={() => saveCart()}
+          >
+            Add to Cart
+          </a>
+        </div>
+      );
+    }
+    return (<></>);
+  };
+
+  const populateRecipeButton = () => {
+    if (showRecipe) {
+      return (
+        <div>
+          <a
+            id="review-button"
+            onClick={() => saveRecipe()}
+          >
+            Save Recipe
+          </a>
+        </div>
+      );
+    }
+    return (<></>);
+  };
+
   const populateButtons = () => {
-    if (showButtons) {
+    console.log(showCart, showRecipe);
+    if (showCart || showRecipe) {
       return (
         <div style={{ display: 'flex' }}>
-          <div>
-            <a
-              id="review-button"
-              onClick={() => saveCart()}
-            >
-              Add to Cart
-            </a>
-          </div>
-          <div>
-            <a
-              id="review-button"
-              onClick={() => saveRecipe()}
-            >
-              Save Recipe
-            </a>
-          </div>
+          {populateCartButton()}
+          {populateRecipeButton()}
         </div>
       );
     }
