@@ -24,7 +24,7 @@ const Recipe = (props) => {
   const [{ quantity }] = useState(props);
   const [{ username }] = useState(props);
   const [{ showButtons }] = useState(props);
-  const url = 'http://localhost:3001';
+  const url = 'https://tobias-fischer-recipez.herokuapp.com/';
   if (healthValues['SUGAR.added']) healthValues.SUGARADDED = healthValues['SUGAR.added'];
 
   const nutritionFacts = [
