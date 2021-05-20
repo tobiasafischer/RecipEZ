@@ -8,12 +8,9 @@ const Cart = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [list, setList] = useState([]);
   const [{ username }] = useState(props);
-  let url = 'http://localhost:3001';
-  if (process.env.NODE_ENV === 'production') {
-    url = 'https://tobias-fischer-recipez.herokuapp.com';
-  }
+
   useEffect(() => {
-    axios.get(`${url}/cart`, { params: { username } })
+    axios.get('/cart', { params: { username } })
       .then((data) => {
         setRecipes(data.data);
       })

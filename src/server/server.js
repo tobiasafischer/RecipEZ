@@ -23,8 +23,25 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongo connection error: '));
 
+let API_KEY;
+let API_ID;
+if (process.env.NODE_ENV === 'production') {
+  API_ID = process.env.API_ID;
+  API_KEY = process.env.API_KEY;
+}
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+});
+
+app.get('/all-recipes', (req, res) => {
+  fetch(`https://api.edamam.com/search?q=${req.query.search}&app_id=${API_ID}&app_key=${API_KEY}`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
 });
 
 app.post('/recipe', (req, res) => {

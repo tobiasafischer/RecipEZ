@@ -8,13 +8,9 @@ import Recipe from './recipe';
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const username = 'tobiasaf';
-  let url = 'http://localhost:3001';
 
-  if (process.env.NODE_ENV === 'production') {
-    url = 'https://tobias-fischer-recipez.herokuapp.com';
-  }
   useEffect(() => {
-    axios.get(`${url}/recipe`, { params: { username: 'tobiasaf' } })
+    axios.get('/recipe', { params: { username: 'tobiasaf' } })
       .then((data) => {
         setRecipes(data.data);
       });

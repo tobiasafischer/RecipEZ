@@ -5,14 +5,9 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
+import axios from 'axios';
 import logo from '../assets/recipez.png';
 import Recipe from './recipe';
-
-// import config from '../config';
-
-// let { API_ID, API_KEY } = config;
-let API_KEY;
-let API_ID;
 
 const RecipePage = (props) => {
   const [recipes, setRecipes] = useState([]);
@@ -21,11 +16,6 @@ const RecipePage = (props) => {
   const [{ setSearch }] = useState(props);
   const [currentSearch, setCurrentSearch] = useState('');
   const [showPage, setShowPage] = useState(true);
-
-  if (process.env.NODE_ENV === 'production') {
-    API_ID = process.env.API_ID;
-    API_KEY = process.env.API_KEY;
-  }
 
   const handleSearch = (e) => {
     setCurrentSearch(e.target.value);
@@ -38,12 +28,13 @@ const RecipePage = (props) => {
   };
 
   const getRecipes = async () => {
-    const resp = await fetch(
-      `https://api.edamam.com/search?q=${search}&app_id=${API_ID}&app_key=${API_KEY}`,
-    );
-
-    const data = await resp.json();
-    setRecipes(data.hits);
+    axios.get('/all-recipes', { params: { search } })
+      .then((data) => {
+        setRecipes(data.hits);
+      })
+      .catch((err) => {
+        if (err) throw err;
+      });
   };
   const populatePage = () => {
     if (showPage) {

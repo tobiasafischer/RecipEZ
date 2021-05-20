@@ -31,12 +31,6 @@ const Recipe = (props) => {
 
   const [show, setShow] = useState(true);
 
-  let url = 'http://localhost:3001';
-
-  if (process.env.NODE_ENV === 'production') {
-    url = 'https://tobias-fischer-recipez.herokuapp.com';
-  }
-
   const saveRecipe = () => {
     const json = {
       title,
@@ -53,7 +47,7 @@ const Recipe = (props) => {
       username,
     };
 
-    axios.post(`${url}/recipe`, obj)
+    axios.post('/recipe', obj)
       .then((res) => {
         console.log(res);
       })
@@ -78,7 +72,7 @@ const Recipe = (props) => {
       username,
     };
 
-    axios.post(`${url}/cart`, obj)
+    axios.post('/cart', obj)
       .then((res) => {
         console.log(res);
       })
@@ -143,7 +137,7 @@ const Recipe = (props) => {
       sourceURL,
       username,
     };
-    axios.post(`${url}/delete-card`, obj)
+    axios.post('/delete-card', obj)
       .then(() => {
         setShow(false);
       })

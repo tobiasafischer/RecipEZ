@@ -33,12 +33,6 @@ const NestedList = (props) => {
   const [{ recipe }] = useState(props);
   const [{ username }] = useState(props);
 
-  let url = 'http://localhost:3001';
-
-  if (process.env.NODE_ENV === 'production') {
-    url = 'https://tobias-fischer-recipez.herokuapp.com';
-  }
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -48,7 +42,7 @@ const NestedList = (props) => {
       recipe,
       username,
     };
-    axios.post(`${url}/delete-item`, data)
+    axios.post('/delete-item', data)
       .then(() => {
         setVisible(false);
       })
