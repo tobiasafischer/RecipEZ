@@ -16,6 +16,7 @@ const RecipePage = (props) => {
   const [{ setSearch }] = useState(props);
   const [currentSearch, setCurrentSearch] = useState('');
   const [showPage, setShowPage] = useState(true);
+  const [tiles, setTiles] = useState([]);
 
   const handleSearch = (e) => {
     setCurrentSearch(e.target.value);
@@ -27,10 +28,44 @@ const RecipePage = (props) => {
     setCurrentSearch('');
   };
 
-  const getRecipes = async () => {
+  const populate = () => (
+    <div
+      id="tile-list"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
+      }}
+    >
+      {recipes.map((recipe) => (
+        <Recipe
+          key={JSON.stringify(recipe)}
+          username={username}
+          recipe={recipe.recipe}
+          title={recipe.recipe.label}
+          calories={recipe.recipe.calories}
+          healthValues={recipe.recipe.totalNutrients}
+          healthLabels={recipe.recipe.healthLabels}
+          image={recipe.recipe.image}
+          ingredients={recipe.recipe.ingredientLines}
+          source={recipe.recipe.source}
+          sourceURL={recipe.recipe.url}
+          quantity={recipe.recipe.yield}
+          showCart
+          showRecipe
+        />
+      ))}
+    </div>
+  );
+
+  useEffect(() => {
+    setTiles(populate());
+  }, [recipes]);
+
+  const getRecipes = () => {
     axios.get('/all-recipes', { params: { search } })
       .then((data) => {
-        setRecipes(data.hits);
+        setRecipes(data.data.hits);
       })
       .catch((err) => {
         if (err) throw err;
@@ -78,10 +113,10 @@ const RecipePage = (props) => {
   };
 
   useEffect(() => {
-    getRecipes();
     if (search.length === 0) {
       setShowPage(true);
     } else {
+      getRecipes();
       setShowPage(false);
     }
   }, [search]);
@@ -89,33 +124,7 @@ const RecipePage = (props) => {
   return (
     <div>
       {populatePage()}
-      <div
-        id="tile-list"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-        }}
-      >
-        {recipes.map((recipe) => (
-          <Recipe
-            key={JSON.stringify(recipe)}
-            username={username}
-            recipe={recipe.recipe}
-            title={recipe.recipe.label}
-            calories={recipe.recipe.calories}
-            healthValues={recipe.recipe.totalNutrients}
-            healthLabels={recipe.recipe.healthLabels}
-            image={recipe.recipe.image}
-            ingredients={recipe.recipe.ingredientLines}
-            source={recipe.recipe.source}
-            sourceURL={recipe.recipe.url}
-            quantity={recipe.recipe.yield}
-            showCart
-            showRecipe
-          />
-        ))}
-      </div>
+      {tiles}
     </div>
   );
 };
