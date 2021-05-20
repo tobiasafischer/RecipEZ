@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShoppingList from './list/shopping-list';
 
-const url = 'http://localhost:3001';
-
 const Cart = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [list, setList] = useState([]);
   const [{ username }] = useState(props);
+  let url = 'http://localhost:3001';
+  if (process.env.NODE_ENV === 'production') {
+    url = 'https://tobias-fischer-recipez.herokuapp.com';
+  }
   useEffect(() => {
     axios.get(`${url}/cart`, { params: { username } })
       .then((data) => {
